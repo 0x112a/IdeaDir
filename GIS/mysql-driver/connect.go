@@ -12,13 +12,20 @@ func Connect(dns string) *sql.DB{
 
 }
 
-func Insert(db *sql.DB,carID,indentID int64,t int64,lon,lat string){
-
-	stmt, err := db.Prepare("INSERT INTO track SET carID=?,indentID=?,t=?,lon=?,lat=?")
+//func Insert(db *sql.DB,carID,indentID int64,t int64,lon,lat string){
+//
+//	stmt, err := db.Prepare("INSERT INTO track SET carID=?,indentID=?,t=?,lon=?,lat=?")
+//	stmt.Exec(carID,indentID,t,lon,lat)
+//	checkerr(err)
+//	return
+//
+//}
+func Insert(stmt *sql.Stmt,carID,indentID int64,t int64,lon,lat string){
+	//respon,err:=stmt.Exec(carID,indentID,t,lon,lat)
 	stmt.Exec(carID,indentID,t,lon,lat)
-	checkerr(err)
+	//respon.LastInsertId()
+	//checkerr(err)
 	return
-
 }
 
 func checkerr(err error){

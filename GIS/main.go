@@ -12,8 +12,9 @@ import (
 )
 
 func main()  {
-	dsn := "root:1q2w3e@tcp(127.0.0.1:3306)/GIS"
-	filepath := "/home/monica/IdeaProjects/GIS/gps_20161101"
+	dsn := "root@tcp(127.0.0.1:3306)/GIS"
+	//filepath := "/home/monica/IdeaProjects/GIS/gps_20161101"
+	filepath := "/root/gps_20161101"
 	db := mysql_driver.Connect(dsn)
 	err := db.Ping()
 	checkErr(err)
@@ -25,6 +26,8 @@ func main()  {
 	defer f.Close()
 
 
+	stmt ,err := db.Prepare("INSERT INTO track SET carID=?,indentID=?,t=?,lon=?,lat=?")
+	checkErr(err)
 
 	begin := time.Now()
 	input := bufio.NewScanner(f)
@@ -32,12 +35,8 @@ func main()  {
 	indent ,index1 := "",0
 	i:=0
 	for input.Scan(){
-		//if i < 16380{
-		//	i++
-		//	continue
-		//}
 		temp := strings.Split(input.Text(),",")
-		fmt.Println(i,"\t",temp)
+		fmt.Println(i," | ",temp)
 		if car != temp[0]{
 			car = temp[0]
 			index++
@@ -46,13 +45,15 @@ func main()  {
 			indent = temp[1]
 			index1++
 		}
-		index2 ,err:= strconv.Atoi(temp[2])
-		checkErr(err)
-		mysql_driver.Insert(db,int64(index),int64(index1),int64(index2),temp[3],temp[4])
+		index2,_:= strconv.Atoi(temp[2])
+		//checkErr(err)
+		//mysql_driver.Insert(db,int64(index),int64(index1),int64(index2),temp[3],temp[4])
+		mysql_driver.Insert(stmt,int64(index),int64(index1),int64(index2),temp[3],temp[4])
 		i++
 	}
 	end := time.Since(begin)
-	fmt.Println(end.Seconds(),i)
+	fmt.Println(end.Seconds(),"\tCount:",i)
+	//fmt.Println(end.Seconds())
 }
 
 
