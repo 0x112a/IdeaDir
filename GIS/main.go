@@ -52,7 +52,7 @@ func main()  {
 		i++
 	}
 	end := time.Since(begin)
-	fmt.Println(end.Seconds())
+	fmt.Println(end.Seconds(),i)
 }
 
 
