@@ -45,10 +45,10 @@ func inputP() *PartitionNode {
 	fmt.Println("请输入作业名和作业大小（用空格隔开）")
 	input := bufio.NewScanner(os.Stdin)
 	//
-	INPUT:
+INPUT:
 	input.Scan()
 	temp := strings.Split(input.Text(), " ")
-	if len(temp) != 2{
+	if len(temp) != 2 {
 		fmt.Println("输入错误，请重新输入：")
 		goto INPUT
 	}
@@ -94,12 +94,21 @@ func (l *PartitionLink) allotFF(n *PartitionNode) {
 			tp.pre = p
 			tp.next = p.next
 
+			// 修改后继节点的前驱
+			if p.next != nil {
+				p.next.pre = tp
+			}
 			//修改当前节点的信息
 			p.node = n
 			p.status = occupy
 			p.next = tp
 
 			//修改剩于分区
+			fmt.Println("内存分配成功！")
+			return
+		} else if p.node.size == n.size {
+			p.status = occupy
+			p.node = n
 			fmt.Println("内存分配成功！")
 			return
 		}
@@ -119,7 +128,7 @@ func (l *PartitionLink) allotBF(n *PartitionNode) {
 	for p != nil {
 		if p.status == unoccupy {
 			temp := p.node.size - n.size
-			if temp > 0 && temp < size {
+			if temp >= 0 && temp < size {
 				size = temp
 				best = p
 			}
@@ -137,7 +146,14 @@ func (l *PartitionLink) allotBF(n *PartitionNode) {
 		fmt.Println("内存不足，分配失败！")
 		return
 	}
+
 	//为进程分配内存
+	if best.node.size == n.size {
+		best.node = n
+		best.status = occupy
+		fmt.Println("内存分配成功！")
+		return
+	}
 	tp := new(PartitionLink)
 	tp.firstLocal = best.firstLocal + n.size
 	tp.pre = best
@@ -145,6 +161,10 @@ func (l *PartitionLink) allotBF(n *PartitionNode) {
 	tp.node = new(PartitionNode)
 	tp.node.size = best.node.size - n.size
 	tp.status = unoccupy
+
+	if tp.next != nil {
+		tp.next.pre = tp
+	}
 
 	best.status = occupy
 	best.node = n
@@ -182,6 +202,13 @@ func (l *PartitionLink) allotWF(n *PartitionNode) {
 		return
 	}
 	//为进程分配内存
+	if worst.node.size == n.size {
+		worst.status = occupy
+		worst.node = n
+		fmt.Println("内存分配成功！")
+		return
+
+	}
 	tp := new(PartitionLink)
 	tp.firstLocal = worst.firstLocal + n.size
 	tp.pre = worst
@@ -189,6 +216,10 @@ func (l *PartitionLink) allotWF(n *PartitionNode) {
 	tp.node = new(PartitionNode)
 	tp.node.size = worst.node.size - n.size
 	tp.status = unoccupy
+
+	if tp.next != nil {
+		tp.next.pre = tp
+	}
 
 	worst.status = occupy
 	worst.node = n
@@ -219,9 +250,14 @@ func (l *PartitionLink) recycle() {
 				p = p.pre
 			}
 			//判断是否与后继节点合并
-			if p.next.status == unoccupy {
+			if p.next != nil && p.next.status == unoccupy {
 				p.node.size += p.next.node.size
+				//修改后继节点的后继节点的前驱
+				if p.next.next != nil {
+					p.next.next.pre = p
+				}
 				p.next = p.next.next
+
 			}
 			success = true
 			break
