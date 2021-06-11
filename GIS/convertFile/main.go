@@ -11,9 +11,9 @@ var filePath = "/home/monica/IdeaProjects/GIS/gps_20161101"
 
 func main() {
 
-	f,err:= os.Open(filePath)
+	f, err := os.Open(filePath)
 	checkErr(err)
-	o,err := os.Create("gps")
+	o, err := os.Create("gps")
 	checkErr(err)
 	defer f.Close()
 	defer o.Close()
@@ -22,47 +22,44 @@ func main() {
 
 	var carID = make(map[string]int)
 	var indentID = make(map[string]int)
-	var ID,inID int
+	var ID, inID int
 
-	for input.Scan(){
-		//if ID > 3{
-		//	break
-		//}
+	for input.Scan() {
 
-		temp := strings.Split(input.Text(),",")
+		temp := strings.Split(input.Text(), ",")
 
-		var cID,iID int
+		var cID, iID int
 
-		if v,ok := carID[temp[0]];ok{
+		if v, ok := carID[temp[0]]; ok {
 			cID = v
 
-		}else {
+		} else {
 			ID++
-			inID=0
-			carID[temp[0]]=ID
-			cID=ID
+			inID = 0
+			carID[temp[0]] = ID
+			cID = ID
 		}
 
-		if v,ok := indentID[temp[1]];ok{
+		if v, ok := indentID[temp[1]]; ok {
 			iID = v
-		}else {
+		} else {
 			inID++
-			indentID[temp[1]]=inID
-			iID=inID
+			indentID[temp[1]] = inID
+			iID = inID
 		}
-		temp[0]=strconv.Itoa(cID)
-		temp[1]=strconv.Itoa(iID)
-		temp=append(temp,"\n")
+		temp[0] = strconv.Itoa(cID)
+		temp[1] = strconv.Itoa(iID)
+		temp = append(temp, "\n")
 
-		output := strings.Join(temp," ")
+		output := strings.Join(temp, " ")
 		o.WriteString(output)
 
 	}
 
 }
 
-func checkErr(err error)  {
-	if err != nil{
+func checkErr(err error) {
+	if err != nil {
 		panic(err)
 	}
 	return
