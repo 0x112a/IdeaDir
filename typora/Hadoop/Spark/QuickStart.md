@@ -16,7 +16,7 @@ Note that, before Spark 2.0, the main programming interface of Spark was the Res
 
 # Security
 
-Security in Spark is OFF by default. This could mean you are vulnerable to attack by default. Please see [Spark Security](https://spark.apache.org/docs/latest/security.html) before running Spark.
+Security in Spark is OFF by default. This could mean you are vulnerable(易受伤的；易受影响（或攻击）的；脆弱的) to attack by default. Please see [Spark Security](https://spark.apache.org/docs/latest/security.html) before running Spark.
 
 # Interactive Analysis with the Spark Shell
 
