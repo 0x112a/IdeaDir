@@ -13,7 +13,7 @@ func main() {
 
 	f, err := os.Open(filePath)
 	checkErr(err)
-	o, err := os.Create("gps")
+	o, err := os.Create("gps_20161101_complete")
 	checkErr(err)
 	defer f.Close()
 	defer o.Close()
