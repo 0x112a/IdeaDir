@@ -156,3 +156,16 @@
       - Reducer的输入数据类型对应Mapper输出数据类型，也是KV
       - Reduce的业务逻辑写在Reduce()方法中
       - Reduce()方法（ReduceTask进程）对每一组相同K的<K,V>组调用一次reduce()方法
+
+8. WordCount案例实操
+
+   ![image-20210726161034631](./assets/image-20210726161034631.png)
+
+   ```java
+   
+   ```
+   
+   
+
+## 序列化
+
