@@ -30,7 +30,25 @@
 
 ​	
 
-## Spark运行环境
+## Spark运行环境搭建
+
+### Local
+
+
+
+### Standalone
+
+
+
+### Standalone-HA
+
+
+
+### Spark-On-Yarn
+
+
+
+
 
 
 
