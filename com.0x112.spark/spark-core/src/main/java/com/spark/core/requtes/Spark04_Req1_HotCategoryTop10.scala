@@ -19,6 +19,7 @@ object Spark04_Req1_HotCategoryTop10 {
 
     datumRDD.cache()
 
+    // TODO 重写accumulator 类加器
     val accumulator = new HotCategoryAccumulator
 
     sc.register(accumulator)

@@ -3,14 +3,13 @@ package com.spark.core.requtes
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
-import java.io
 
 object Spark03_Req1_HotCategoryTop10 {
   def main(args: Array[String]): Unit = {
 
-    val dataFile = "datas/user_visit_action.txt"
+    val dataFile = "hdfs://master:8020/datas/user_visit_action.txt"
 
-    val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("request1")
+    val sparkConf: SparkConf = new SparkConf().setMaster("spark://master:7077").setAppName("request1")
 
     val sc: SparkContext = new SparkContext(sparkConf)
 
