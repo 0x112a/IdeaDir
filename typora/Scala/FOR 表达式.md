@@ -4,7 +4,7 @@ Scala 提供一个轻量级的标记方式用来表示 *序列推导*。推导�
 
 看下例：
 
-```
+```scala
 case class User(name: String, age: Int)
 
 val userBase = List(User("Travis", 28),
