@@ -1,8 +1,8 @@
-package com.spark.core.operator.transform
+package com.spark.core.rdd.operator.transform
 
 import org.apache.spark.{SparkConf, SparkContext}
 
-object Spark02_RDD_Operator_Transform {
+object Spark02_RDD_Operator_Transform_Test {
 
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf().setMaster("local[*]").setAppName("Operator")
@@ -12,8 +12,8 @@ object Spark02_RDD_Operator_Transform {
 
     val mapRDD = rdd.mapPartitions(
       iter => {
-        println(">>>>>>>>>")
-        iter.map(_ * 2)
+        //要求返回值是迭代器
+        List(iter.max).iterator
       }
     )
 
