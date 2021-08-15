@@ -89,6 +89,10 @@ Zookeeper数据模型的结构与Unix文件系统很类似，整体上可以看�
 - ./bin/zkServer.sh start
 - 查看状态 ./bin/zkServer.sh status
 - 启动客户端 ./bin/zkCli.sh
+  - EndOfStreamException: Unable to read additional data from server sessionid 0x0, likely server has closed socket
+  - 后来才搞明白，由于我在zoo.cfg中配置了3台机器，但是只启动了1台，zookeeper就会认为服务处于不可用状态。
+    zookeeper有个选举算法，当整个集群超过半数机器宕机，zookeeper会认为集群处于不可用状态。
+    所以，3台机器启动1台无法连接，如果启动2台及以上就可以连接了。
 - 退出客户端 quit
 - 停止Zookeeper ./bin/zkServer.sh stop
 

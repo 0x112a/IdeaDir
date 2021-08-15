@@ -4,6 +4,9 @@
 
 - 半数机制：集群中半数以上机器存活，集群可用。
 - Zookeeper虽然在配置文件中没有指定的Master和Work。但是Zookeeper工作时，是有一个节点为Leader，其他则为Follow，Leader是通过内部选举机制临时产生的。
+- 第一次选举机制
+- Leader挂掉的情况
+- （,SID）
 
 ## 节点类型
 
