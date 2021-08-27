@@ -34,11 +34,11 @@ public class DetectCycle {
         return ans;
     }
 }
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) {
-        val = x;
-        next = null;
-    }
-}
+//class ListNode {
+//    int val;
+//    ListNode next;
+//    ListNode(int x) {
+//        val = x;
+//        next = null;
+//    }
+//}
