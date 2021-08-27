@@ -43,3 +43,15 @@ Run the security script with sudo:
 ``` sudo mysql_secure_installation ```
 
 This will take you through a series of prompts where you can make some changes to your MySQL installation’s security options. The first prompt will ask whether you’d like to set up the Validate Password Plugin, which can be used to test the password strength of new MySQL users before deeming them valid.
+
+```sql
+修改密码
+use mysql; 
+
+update user set authentication_string='' where user='root';      --将字段置为空
+
+alter user 'root'@'localhost' identified with mysql_native_password by '123456';
+
+```
+
+https://stackoverflow.com/questions/62524355/unable-to-start-mysql-server-control-process-exited-with-error-code
