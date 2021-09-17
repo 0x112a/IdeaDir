@@ -2,7 +2,9 @@ package com.intoan.note.dao;
 
 import com.intoan.note.po.User;
 import com.intoan.note.util.JDBCUtil;
+import com.intoan.note.util.MyBatisUtil;
 import lombok.Data;
+import org.apache.ibatis.session.SqlSession;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class UserDao {
 
     /**
@@ -19,26 +20,33 @@ public class UserDao {
      * @param user
      * @return
      */
-    public static int updateUser(User user) {
+    public int updateUser(User user){
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        int updateUser = sqlSession.update("com.intoan.note.dao.UserDao.updateUser",user);
 
-        String sql = "update tb_user set nick = ?,mood = ?,head = ? where user_id = ?";
-
-        List<Object> param = new ArrayList<>();
-
-        param.add(user.getNick());
-        param.add(user.getMood());
-        param.add(user.getHead());
-        param.add(user.getUserId());
-
-        int i = BaseDao.executeUpdate(sql, param);
-
-        return i;
+        MyBatisUtil.close(sqlSession,null);
+        return updateUser;
     }
+//    {
+//        String sql = "update tb_user set nick = ?,mood = ?,head = ? where user_id = ?";
+//
+//        List<Object> param = new ArrayList<>();
+//
+//        param.add(user.getNick());
+//        param.add(user.getMood());
+//        param.add(user.getHead());
+//        param.add(user.getUserId());
+//
+//        int i = BaseDao.executeUpdate(sql, param);
+//
+//        return i;
+//    }
 
     /**
      * 通过别名nick查数据
      */
-    public User queryUserByNickAndUserId(String nick,Integer userId){
+    public User queryUserByNickAndUserId(String nick,Integer userId)
+    {
 
         String sql = "select user_id userId,user_name uname,user_pwd upwd,nick,head,mood from tb_user where nick=? and user_id<>?";
 
@@ -57,7 +65,8 @@ public class UserDao {
      * @param userName
      * @return User object
      */
-    public User queryUserByName(String userName){
+    public User queryUserByName(String userName)
+    {
         User user = null;
         Connection connection = null;
         PreparedStatement pstm = null;
@@ -87,7 +96,9 @@ public class UserDao {
         }
         return user;
     }
-    public User queryUserByName1(String name){
+
+    public User queryUserByName1(String name)
+    {
         String sql = "select user_id userId,user_name uname,user_pwd upwd,nick,head,mood from tb_user where user_name=?";
 
         List list = new ArrayList();
@@ -101,7 +112,8 @@ public class UserDao {
     /**
      * 插入一条数据
      */
-    public int insertUser(User user){
+    public int insertUser(User user)
+    {
 
         String sql = "insert into tb_user(user_name,user_pwd,nick,head,mood) value(?,?,?,?,?);";
 

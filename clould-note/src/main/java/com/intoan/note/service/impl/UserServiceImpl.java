@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
-        int row = UserDao.updateUser(user);
+        int row = userDao.updateUser(user);
 
         if (row > 0){
             userResultInfo.setCode(1);
