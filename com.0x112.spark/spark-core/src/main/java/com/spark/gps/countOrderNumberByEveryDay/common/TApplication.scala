@@ -8,7 +8,7 @@ trait TApplication {
 
   def start(appName: String = "New Application")(op: => Unit)={
     //创建配置文件
-//    val sparkConf = new SparkConf().setAppName(appName).setMaster("local[*]")
+//    val sparkConf = new SparkConf().setAppName(appName).setMaster("local[2]").set("spark.driver.memory", "6g")
     val sparkConf = new SparkConf().setAppName(appName)
 
     //创建Spark环境

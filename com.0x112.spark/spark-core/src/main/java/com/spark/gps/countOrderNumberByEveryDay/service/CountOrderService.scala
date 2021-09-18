@@ -7,38 +7,48 @@ import org.apache.spark.rdd.RDD
 class CountOrderService extends TService{
 
   private val dao = new CountOrderDao
+
+  def process(input: String,ouput: String) ={
+
+    val fileRDD = dao.readFile(input)
+
+    val value = fileRDD.map(data => {
+      data.split(",")(1)
+    })
+
+    val value1 = value.distinct()
+
+    val value2: RDD[(String, Int)] = value1.map(_ =>{
+      val strings = input.split("/")
+      (strings(strings.length-1), 1)
+    })
+
+
+    val value3 = value2.reduceByKey(_ + _)
+
+    val tuples: Array[(String, Int)] = value3.collect()
+
+    tuples.head
+  }
+
   override def dataAnalysis(): Any = {
-//    ./bin/spark-submit --class com.spark.gps.countOrderNumberByEveryDay.application.OrderCountByEveryDayApplication --master yarn --deploy-mode cluster ~/everyCount.jar
 
-    val fileRDD: RDD[(String, String)] = dao.readFile("hdfs://master:8020/gis/gps_20161101")
-//    val fileRDD: RDD[(String, String)] = dao.readFile("datas/1.txt")
+    // 运行命令
+    // ./bin/spark-submit --class com.spark.gps.countOrderNumberByEveryDay.application.OrderCountByEveryDayApplication --master yarn --deploy-mode cluster ~/everyCount.jar
 
-    val metaDataRdd = fileRDD.map(data => {
+    val list = new Array[(String,Int)](30)
+    var outPath = "hdfs://master:8020/everyOut"
 
-      val strings: Array[String] = data._2.split("\n")
-      val strings1 = data._1.split("/")
-      val strArr = strings.map(_ + "," + strings1(strings1.length - 1))
-      strArr.toList
+    for (i <- 101 to 130){
+      var fileName = "hdfs://master:8020/gis/gps_20161"
 
-    }).flatMap(list => list)
+      fileName += i
 
-    val everyRdd = metaDataRdd.map(data => {
-      val strings = data.split(",")
-      strings(1) +","+ strings(strings.length - 1)
-    }).distinct()
+      list(i-101) = process(fileName,outPath)
+    }
 
-
-    val everyDayCount = everyRdd.map(data => {
-      val strings = data.split(",")
-      (strings(1), 1)
-    }).reduceByKey(_ + _)
-
-//scheduler.TaskSetManager: Lost task 0.3 in stage 0.0 (TID 5) (172.21.3.211 executor 4): java.lang.OutOfMemoryError: Java heap space
-    everyDayCount.saveAsTextFile("hdfs://master:8020/everyDayCounts")
-
-//    val tuples: Array[(String, Int)] = everyDayCount.collect()
-//    tuples
-
+    val value = dao.makeRDDByList(list)
+    value.repartition(1).sortBy(_._1).saveAsTextFile(outPath)
 
   }
 }

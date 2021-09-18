@@ -7,9 +7,15 @@ trait TDao {
   def readFile(fileName: String)={
     val context = EnvUtil.get()
 
-    context.wholeTextFiles(fileName)
+//    context.wholeTextFiles(fileName)
+    context.textFile(fileName)
+  }
 
-//    context.textFile(fileName)
+  def makeRDDByList(list: Array[(String,Int)])={
+
+    val context = EnvUtil.get()
+
+    context.makeRDD(list)
   }
 
 }
