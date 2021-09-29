@@ -23,7 +23,7 @@ create table if not exists t_emp(
 );
 ```
 
-- j增加
+- 增加
 
   ```sql
   insert into t_dept(id,name) values('1','刘备');
