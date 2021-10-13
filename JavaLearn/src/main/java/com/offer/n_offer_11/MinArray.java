@@ -12,7 +12,7 @@ public class MinArray {
             int mid = (low+hight)/2;
             if (numbers[mid] < numbers[hight]){
 //                hight = mid - 1;
-                hight = mid;F
+                hight = mid;
             }else if (numbers[mid] > numbers[hight]){
                 low = mid + 1;
             }else {
