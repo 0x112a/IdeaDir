@@ -24,7 +24,7 @@ MVC的工作流程：
 
 ### 2、什么是SpringMVC
 
-12**SpringMVC是Spring的一个后续产品，是Spring的一个子项目**
+**SpringMVC是Spring的一个后续产品，是Spring的一个子项目**
 
 SpringMVC 是 Spring 为表述层开发提供的一整套完备的解决方案。在表述层框架历经 Strust、WebWork、Strust2 等诸多产品的历代更迭之后，目前业界普遍选择了 SpringMVC 作为 Java EE 项目表述层开发的**首选方案**。
 
@@ -92,7 +92,7 @@ Spring版本：5.3.1
 </dependencies>
 ```
 
-注：由于 Maven 的传递性，我们不必将所有需要的包全部配置依赖，而是配置最顶端的依赖，其他靠传递性导入。
+注：**由于 Maven 的传递性，我们不必将所有需要的包全部配置依赖，而是配置最顶端的依赖，其他靠传递性导入。**
 
 ![images](img\img001.png)
 
@@ -379,7 +379,7 @@ public String testRequestMapping(){
 
 @RequestMapping注解的params属性是一个字符串类型的数组，可以通过四种表达式设置请求参数和请求映射的匹配关系
 
-"param"：要求请求映射所匹配的请求必须携带param请求参数
+**"param"：要求请求映射所匹配的请求必须携带param请求参数**
 
 "!param"：要求请求映射所匹配的请求必须不能携带param请求参数
 
@@ -412,7 +412,7 @@ public String testRequestMapping(){
 
 @RequestMapping注解的headers属性是一个字符串类型的数组，可以通过四种表达式设置请求头信息和请求映射的匹配关系
 
-"header"：要求请求映射所匹配的请求必须携带header请求头信息
+**"header"：要求请求映射所匹配的请求必须携带header请求头信息**
 
 "!header"：要求请求映射所匹配的请求必须不能携带header请求头信息
 
@@ -495,7 +495,7 @@ public String testParam(String username, String password){
 
 ### 3、@RequestParam
 
-@RequestParam是将请求参数和控制器方法的形参创建映射关系
+@RequestParam是将**请求参数**和**控制器方法**的形参创建映射关系
 
 @RequestParam注解一共有三个属性：
 
